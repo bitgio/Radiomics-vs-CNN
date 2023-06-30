@@ -1,6 +1,7 @@
 numpy
+scikit-learn
 matplotlib
 keras
 tensorflow
 matlab
-scikit-learn
+sphinxcontrib-matlabdomain
