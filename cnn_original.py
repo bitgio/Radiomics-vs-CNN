@@ -2,8 +2,8 @@ import os
 import numpy as np
 import threading as thr
 import matplotlib.pyplot as plt
-from sklearn .model_selection import train_test_split
-from sklearn .metrics import roc_curve, auc
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_curve, auc
 from keras.models import Sequential
 from keras.layers import Conv2D, BatchNormalization, MaxPool2D, Dense, Flatten, InputLayer, Activation, Dropout
 from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
