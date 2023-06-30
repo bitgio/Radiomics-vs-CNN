@@ -7,9 +7,9 @@ Welcome to Radiomics vs CNN's documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-   
-      api.rst
-      installing.rst
+
+   api
+   installing
 
 
 
