@@ -3,4 +3,4 @@ scikit-learn
 matplotlib>=2.2
 keras
 sphinx==5.3.0
-# matlab
+matlab

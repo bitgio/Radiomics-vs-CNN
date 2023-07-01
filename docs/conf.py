@@ -10,12 +10,12 @@ import os
 import sys
 
 # DEVE PUNTARE ALLA CARTELLA DOVE C'È IL CODICE PYTHON, 
-# così va 2 cartelle indietro: 1 cartella indietro <=> cd ../   ; 2 cartelle indietro <=> cd ../.. 
-sys.path.insert(0, os.path.abspath('../..'))
+# 1 cartella indietro <=> cd ../   ; 2 cartelle indietro <=> cd ../.. 
+sys.path.insert(0, os.path.abspath('../RadCNN'))
 
 project = 'Radiomics vs CNN'
 
-sys.path.insert(0, os.path.abspath('../..'))
+sys.path.insert(0, os.path.abspath('../RadCNN'))
 
 copyright = '2023, Giovanni Bitonti, Ana Pascual'
 author = 'Giovanni Bitonti, Ana Pascual'
