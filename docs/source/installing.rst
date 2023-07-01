@@ -17,6 +17,7 @@ Importing packages
 
 Sul nel *repository* già commentato si trova il file di testo *requirements.txt* in cui specificano le librerie di Python usate. Si consiglia avere una
 versione uguale o superiore a Python 3.9.
+
 Inoltre, la parte relativa alla radiomica è stata scritta in linguaggio Matlab. Pertanto è necessario disporre della piattaforma Matlab. Si raccomanda
 vivamente di aggiornare la licenza alla versione Matlab 2023a per evitare errori di esecuzione nelle funzioni e nei *Matlab Toolbox* usati.
 
