@@ -2,8 +2,8 @@ import os
 import numpy as np
 import threading as thr
 import matplotlib.pyplot as plt
-#from sklearn.model_selection import train_test_split
-#from sklearn.metrics import roc_curve, auc
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_curve, auc
 from keras.models import Sequential
 from keras.layers import Conv2D, BatchNormalization, MaxPool2D, Dense, Flatten, InputLayer, Activation, Dropout
 from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
@@ -11,6 +11,7 @@ from tensorflow.keras.optimizers import SGD
 import matlab.engine
 
 def create_dataset(lista, o_img, f_img, labels):
+
     """Function calling the Matlab file in order to filter the images.
     
     Arguments
@@ -38,6 +39,7 @@ def create_dataset(lista, o_img, f_img, labels):
 
 
 def cnn_o(shape=(125, 125, 1)):
+
     """CNN original mammo model.
     
     Arguments
@@ -90,11 +92,11 @@ if __name__ == '__main__':
     eng = matlab.engine.start_matlab()
 
     mammo_o, mammo_f, label = [], [], []
-    data_folder = "C:/Users/anapascual/exam_project/dataset/"
+    data_folder = "../dataset/"
     os.chdir(data_folder)
     l = os.listdir()
 
-    os.chdir("C:/Users/anapascual/exam_project/")
+    os.chdir("https://github.com/bitgio/Radiomics-vs-CNN/tree/main/")
     threads = []
     chunk = 6
 

@@ -14,6 +14,9 @@ import sys
 sys.path.insert(0, os.path.abspath('../..'))
 
 project = 'Radiomics vs CNN'
+
+sys.path.insert(0, os.path.abspath('../..'))
+
 copyright = '2023, Giovanni Bitonti, Ana Pascual'
 author = 'Giovanni Bitonti, Ana Pascual'
 release = '1.0'
