@@ -15,12 +15,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-"""Codice Principale per la costruzione della CNN
+"""
+
+-----------------------------------------------
+Codice Principale per la costruzione della CNN
+-----------------------------------------------
+
+
 """
 
 
 import os
-import threading
+import threading as thr
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -29,7 +35,10 @@ from keras.models import Sequential
 from keras.layers import Conv2D, BatchNormalization, MaxPool2D, Dense, Flatten, InputLayer, Activation, Dropout
 from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
 from keras.optimizers import SGD
-from RadCNN.modulo_1 import create_dataset
+from modulo_0 import matlab_on
+from modulo_1 import create_dataset
+from modulo_2 import nf_cnn
+
 
 if __name__ == '__main__':
 
@@ -49,3 +58,31 @@ if __name__ == '__main__':
     
     for j in threads:
         j.join()
+
+    mammo_o = np.asarray(mammo_o, dtype = 'float32')/255.
+    mammo_f = np.asarray(mammo_f, dtype = 'float32')/255.
+    label = np.asarray(label)
+
+    mammo_o_4d = np.reshape(mammo_o, (147, 125, 125, 1))
+    mammo_f_4d = np.reshape(mammo_f, (147, 64, 64, 1))
+
+    learning_rate = 0.001
+    batch_size = 21
+    reduce_on_plateau = ReduceLROnPlateau(monitor="val_loss", factor=0.1, patience=10,  
+                                          verbose=0, mode="auto", min_delta=0.0001, cooldown=0, min_lr=0)
+
+    model_o = nf_cnn()
+    model_o.compile(optimizer = SGD(learning_rate, momentum = 0.9), loss = 'binary_crossentropy', metrics = ['accuracy'])
+    X_train_o, X_val_o, Y_train_o, Y_val_o = train_test_split(mammo_o_4d, label, test_size = 0.2, random_state = 44)
+    
+    traino = model_o.fit(X_train_o, Y_train_o,
+                     batch_size = batch_size,
+                     epochs = 200,
+                     verbose=1,
+                     validation_data=(X_val_o, Y_val_o),
+                     callbacks = [reduce_on_plateau])
+    
+    
+
+
+
