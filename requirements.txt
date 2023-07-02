@@ -4,3 +4,4 @@ matplotlib>=2.2
 keras
 sphinx==5.3.0
 scikit-image
+tensorflow
