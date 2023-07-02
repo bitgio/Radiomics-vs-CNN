@@ -37,14 +37,17 @@ Code execution
 ---------------
 
 
-Il codice si trova nella cartella chiamata *RadCNN <https://github.com/bitgio/Radiomics-vs-CNN/tree/main/RadCNN>*. È diviso in due sezioni: la parte
+Il codice si trova nella cartella chiamata `RadCNN <https://github.com/bitgio/Radiomics-vs-CNN/tree/main/RadCNN>*`_. È diviso in due sezioni: la parte
 con la pipeline radiomica e quella della CNN.
 
-*radiomica:
+* radiomica:
     Si trova il file di Matlab dove viene implementata tutta la pipeline della radiomica. L'esecuzione di questo script ritorna anche il dataset delle mammografie
     in cui si ha usato il filtro della wavelet decomposition.
 
-*CNN:
+* CNN:
     Dentro di questa cartella prima si trovano i Jupyter Notebooks dove è stato implementato la CNN per i due casi che sono stati confrontati: mammografie originale
     e mammografie filtrate con la wavelet decomposition di Matlab. In ciascuno dei notebooks discussi in precedenza viene messo anche il confronto tra i modelli delle CNN
     allenate soltanto con i dataset originale oppure con un dataset più grande (cioè, con un set di dati aumentati tramitte l'uso della data augmentation).
+
+
+    Ci sono anche delle sottocartelle dove si è spezzato il codice per potere compilare del modo corretto la documentazione.
