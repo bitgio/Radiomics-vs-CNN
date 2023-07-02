@@ -10,10 +10,7 @@ def create_nf_dataset(datfold, l, imf, lab):
     
     l : list
         Contiene un pezzo dei percorsi delle immagini del dataset.
-    
-    imo : list
-        Variable dove si accummulano le matrice delle immagine originale (senza filtrare).
-    
+
     imf : list
         Variable dove si accummulano le matrice delle immagine filtrate.
 
