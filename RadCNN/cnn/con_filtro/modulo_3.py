@@ -1,5 +1,5 @@
 def plot_train_val(train, title):
-    """Si plotta la training e validation acuracy anche la corrispondente loss di entrambi.
+    """Si plotta la training e validation accuracy anche la corrispondente loss di entrambi.
 
     Argomenti
     ----------
