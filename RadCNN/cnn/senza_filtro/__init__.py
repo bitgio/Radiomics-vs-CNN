@@ -18,8 +18,10 @@
 """
 
 -----------------------------------------------
-Codice Principale per la costruzione della CNN
+Codice principale per la costruzione della CNN
 -----------------------------------------------
+
+In questo Python file si può trovare l'implementazione della CNN
 
 
 """
@@ -29,15 +31,19 @@ import os
 import threading as thr
 import numpy as np
 import matplotlib.pyplot as plt
+from skimage.io import imread
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve, auc
 from keras.models import Sequential
 from keras.layers import Conv2D, BatchNormalization, MaxPool2D, Dense, Flatten, InputLayer, Activation, Dropout
-from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
+from keras.callbacks import ReduceLROnPlateau
 from keras.optimizers import SGD
-from modulo_0 import matlab_on
-from modulo_1 import create_dataset
-from modulo_2 import nf_cnn
+
+
+__all__ = ['create_nf_dataset', 'nf_cnn']
+
+from modulo_3 import create_nf_dataset
+from modulo_4 import nf_cnn
 
 
 if __name__ == '__main__':
@@ -52,7 +58,7 @@ if __name__ == '__main__':
     chunk = 6
 
     for i in range(49):
-        t = thr.Thread(target = create_dataset, args = (listdir[i*chunk : (i+1)*chunk], mammo_o, mammo_f, label))
+        t = thr.Thread(target = create_nf_dataset, args = (listdir[i*chunk : (i+1)*chunk], mammo_o, mammo_f, label))
         threads.append(t)
         t.start()
     
