@@ -15,7 +15,9 @@ sys.path.insert(0, os.path.abspath('../RadCNN'))
 
 project = 'Radiomics vs CNN'
 
-sys.path.insert(0, os.path.abspath('../RadCNN'))
+sys.path.insert(0, os.path.abspath('../RadCNN/cnn/senza_filtro'))
+sys.path.insert(0, os.path.abspath('../RadCNN/cnn/con_filtro'))
+
 
 copyright = '2023, Giovanni Bitonti, Ana Pascual'
 author = 'Giovanni Bitonti, Ana Pascual'

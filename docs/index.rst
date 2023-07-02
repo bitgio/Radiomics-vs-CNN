@@ -8,8 +8,9 @@ Welcome to Radiomics vs CNN's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   ./api
-   ./installing
+   
+   ./installing.rst
+   ./api.rst
 
 
 
