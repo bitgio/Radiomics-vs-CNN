@@ -1,7 +1,6 @@
 API
 ====
 
-
 .. automodule:: __init__
    :members:
 
