@@ -1,4 +1,4 @@
-def create_nf_dataset(datfold, l, imf, lab):
+def create_f_dataset(datfold, l, imf, lab):
 
     """Funzione che chiama il file di Matlab per filtrare le immagini.
     

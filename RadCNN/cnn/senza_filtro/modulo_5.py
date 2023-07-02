@@ -22,12 +22,11 @@ def nf_cnn(shape=(125, 125, 1)):
         MaxPool2D((6,6), strides = 2),
 
 
-        Conv2D(7, (3,3), padding = 'same'),
+        Conv2D(8, (3,3), padding = 'same'),
         BatchNormalization(),
         Activation('relu'),
 
         MaxPool2D((6,6), strides = 2),
-        Dropout(0.1),
 
 
         Conv2D(10, (3,3), padding = 'same'),
@@ -35,11 +34,11 @@ def nf_cnn(shape=(125, 125, 1)):
         Activation('relu'),
 
         MaxPool2D((6,6), strides = 2),
+        Dropout(0.2),
 
         Flatten(),
 
         Dense(10, activation = 'relu'),
-        Dropout(0.1),
         Dense(1, activation = 'sigmoid')
 
     ])
