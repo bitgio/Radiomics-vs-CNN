@@ -1,5 +1,3 @@
-from .modulo_0 import matlab_on
-
 def create_nf_dataset(datfold, l, imo, lab):
 
     """Funzione che chiama il file di Matlab per filtrare le immagini.
