@@ -21,7 +21,7 @@
 Codice principale per la costruzione della CNN
 -----------------------------------------------
 
-In questo Python file si può trovare l'implementazione della CNN
+In questo Python file si può trovare l'implementazione della CNN ottimizzata con il dataset con il filtro.
 
 
 """
@@ -41,11 +41,12 @@ from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
 
 
-__all__ = ['create_f_dataset', 'f_cnn', 'plot_train_val']
+__all__ = ['create_f_dataset', 'f_cnn', 'f_cnn_aug', 'plot_train_val']
 
 from modulo_1 import create_f_dataset
 from modulo_2 import f_cnn
-from modulo_3 import plot_train_val
+from modulo_3 import f_cnn_aug
+from modulo_4 import plot_train_val
 
 
 
@@ -91,16 +92,11 @@ if __name__ == '__main__':
     
     plot_train_val(train, 'Filtered Dataset')
 
-    acc_f = []
-    for j in range(10):
-        _, val_acc = model_f.evaluate(X_val_f, Y_val_f, verbose=0)
-        print('Validation accuracy: %.3f' % (val_acc))
-        acc_f.append(val_acc)
 
     
 
     # MODELLO ALLENATO CON LE IMMAGINI FILTRATE E QUELLE CHE SONO STATE CREATE CON LA DATA AUGMENTATION  
-    model_f_aug = f_cnn()
+    model_f_aug = f_cnn_aug()
     aug = ImageDataGenerator(
                 rotation_range = 90,
                 horizontal_flip = True,
@@ -117,11 +113,15 @@ if __name__ == '__main__':
                      validation_data=(aug_val_f),
                      callbacks = [reduce_on_plateau])
     
-    plot_train_val(train, 'Filtered Augmented Dataset')
+    plot_train_val(train_aug, 'Filtered Augmented Dataset')
 
+    acc_f = []
     acc_f_aug = []
     for j in range(10):
-        _, val_acc = model_f.evaluate(aug_val_f, verbose=0)
+        _, val_acc = model_f.evaluate(X_val_f, Y_val_f, verbose=0)
+        print('Validation accuracy: %.3f' % (val_acc))
+        acc_f.append(val_acc)
+        _, val_acc = model_f_aug.evaluate(aug_val_f, verbose=0)
         print('Validation accuracy: %.3f' % (val_acc))
         acc_f_aug.append(val_acc)
     

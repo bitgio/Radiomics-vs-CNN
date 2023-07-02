@@ -1,46 +1,33 @@
-def nf_cnn(shape=(125, 125, 1)):
+def create_nf_dataset(datfold, l, imo, lab):
 
-    """Modelo della CNN ottimizzato per il dataset originale delle mammografie senza filtrare. 
+    """Funzione legge il dataset delle immagini senza il filtro.
     
-    Argomento
+    Argomenti
     ---------
 
-    shape : tupla
-        Dimensionalità delle immagini (125x125 px) con cui si allenarà la CNN e il tipo di *color channels* (in questo caso, trattandosi di immagini in scala di grigi, in questo caso, trattandosi di immagini in scala di grigi, il canale del colore deve essere impostato su 1).
-       
+    datfold : string
+        Percorso della cartella che contiene il dataset.
+    
+    l : list
+        Contiene un pezzo dei percorsi delle immagini del dataset.
+    
+    imo : list
+        Variable dove si accummulano le matrice delle immagine originale (senza filtrare).
+    
+    lab : list
+        Variable dove si accummulano i *labels* corrispondenti a ciascune delle matrice.
+    
     
     Risultato:
-        Modelo
+        Dataset con tutte le immagini originale senza filtrare anche i suoi labels.
     """
-    
-    model = Sequential([
-
-        Conv2D(4, (3,3), padding = 'same', input_shape = shape),
-        BatchNormalization(),
-        Activation('relu'),
-
-        MaxPool2D((6,6), strides = 2),
-
-
-        Conv2D(8, (3,3), padding = 'same'),
-        BatchNormalization(),
-        Activation('relu'),
-
-        MaxPool2D((6,6), strides = 2),
-
-
-        Conv2D(10, (3,3), padding = 'same'),
-        BatchNormalization(),
-        Activation('relu'),
-
-        MaxPool2D((6,6), strides = 2),
-        Dropout(0.2),
-
-        Flatten(),
-
-        Dense(10, activation = 'relu'),
-        Dense(1, activation = 'sigmoid')
-
-    ])
-
-    return model
+     
+    for element in l:
+        if "_1_resized.pgm" in element:
+            mo = imread(os.path.join(datfold, element))
+            imo.append(mo)
+            lab.append(1.)
+        elif "_2_resized.pgm" in element:
+            mo = imread(os.path.join(datfold, element))
+            imo.append(mo)
+            lab.append(0.)
