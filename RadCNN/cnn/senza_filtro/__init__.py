@@ -36,8 +36,7 @@ from keras.models import Sequential
 from keras.layers import Conv2D, BatchNormalization, MaxPool2D, Dense, Flatten, InputLayer, Activation, Dropout
 from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
 from keras.optimizers import SGD
-from modulo_0 import matlab_on
-from modulo_1 import create_dataset
+from modulo_1 import create_nf_dataset
 from modulo_2 import nf_cnn
 
 
