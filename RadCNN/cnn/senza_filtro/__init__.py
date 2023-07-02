@@ -29,6 +29,7 @@ import os
 import threading as thr
 import numpy as np
 import matplotlib.pyplot as plt
+from skimage.io import imread
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve, auc
 from keras.models import Sequential
