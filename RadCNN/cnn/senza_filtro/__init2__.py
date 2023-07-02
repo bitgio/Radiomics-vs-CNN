@@ -21,7 +21,7 @@
 Codice principale per la costruzione della CNN
 -----------------------------------------------
 
-In questo Python file si può trovare l'implementazione della CNN
+In questo Python file si può trovare l'implementazione della CNN ottimizzata con il dataset non filtrato.
 
 
 """
@@ -41,11 +41,12 @@ from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
 
 
-__all__ = ['create_nf_dataset', 'nf_cnn', 'plot_train_val']
+__all__ = ['create_nf_dataset', 'nf_cnn', 'nf_cnn_aug', 'plot_train_val']
 
-from modulo_4 import create_nf_dataset
-from modulo_5 import nf_cnn
-from modulo_6 import plot_train_val
+from modulo_5 import create_nf_dataset
+from modulo_6 import nf_cnn
+from modulo_7 import nf_cnn_aug
+from modulo_8 import plot_train_val
 
 
 if __name__ == '__main__':
@@ -90,16 +91,10 @@ if __name__ == '__main__':
     
     plot_train_val(train, 'Non-Filtered Dataset')
 
-    acc_nf = []
-    for j in range(10):
-        _, val_acc = model_o.evaluate(X_val_o, Y_val_o, verbose=0)
-        print('Validation accuracy: %.3f' % (val_acc))
-        acc_nf.append(val_acc)
-
     
 
     # MODELLO ALLENATO CON LE IMMAGINI NON FILTRATE E QUELLE CHE SONO STATE CREATE CON LA DATA AUGMENTATION  
-    model_f_aug = nf_cnn()
+    model_o_aug = nf_cnn_aug()
     aug = ImageDataGenerator(
                 rotation_range = 90,
                 horizontal_flip = True,
@@ -109,20 +104,25 @@ if __name__ == '__main__':
     aug_train_o = aug.flow(mammo_o_4d, label, batch_size = 30, subset = 'training')
     aug_val_o = aug.flow(mammo_o_4d, label, batch_size = 30, subset = 'validation')
 
-    train_aug = model_f_aug.fit(aug_train_o,
+    train_aug = model_o_aug.fit(aug_train_o,
                      batch_size = batch_size,
                      epochs = 200,
                      verbose=1,
                      validation_data=(aug_val_o),
                      callbacks = [reduce_on_plateau])
     
-    plot_train_val(train, 'Non-Filtered Augmented Dataset')
+    plot_train_val(train_aug, 'Non-Filtered Augmented Dataset')
 
+
+    acc_nf = []
     acc_nf_aug = []
     for j in range(10):
-        _, val_acc = model_o.evaluate(aug_val_o, verbose=0)
+        _, val_acc = model_o.evaluate(X_val_o, Y_val_o, verbose=0)
+        print('Validation accuracy: %.3f' % (val_acc))
+        acc_nf.append(val_acc)
+        _, val_acc = model_o_aug.evaluate(aug_val_o, verbose=0)
         print('Validation accuracy: %.3f' % (val_acc))
         acc_nf_aug.append(val_acc)
     
-    print(f'DATASET FILTERED:\nValidation accuracy: {np.mean(acc_nf)} \t Validation loss: {np.std(acc_nf)}')
-    print(f'DATASET AUGMENTED FILTERED:\nValidation accuracy: {np.mean(acc_nf_aug)} \t Validation loss: {np.std(acc_nf_aug)}')
+    print(f'DATASET NON-FILTERED:\nValidation accuracy: {np.mean(acc_nf)} \t Validation loss: {np.std(acc_nf)}')
+    print(f'DATASET AUGMENTED NON-FILTERED:\nValidation accuracy: {np.mean(acc_nf_aug)} \t Validation loss: {np.std(acc_nf_aug)}')

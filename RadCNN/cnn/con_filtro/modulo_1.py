@@ -1,6 +1,6 @@
 def create_f_dataset(datfold, l, imf, lab):
 
-    """Funzione che chiama il file di Matlab per filtrare le immagini.
+    """Funzione legge il dataset delle immagini filtrate.
     
     Argomenti
     ---------

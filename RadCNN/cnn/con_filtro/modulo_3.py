@@ -1,38 +1,46 @@
-def plot_train_val(train, title):
-    """Si plotta la training e validation accuracy anche la corrispondente loss di entrambi.
+def f_cnn_aug(shape=(64, 64, 1)):
+    """Modelo della CNN ottimizzato per il dataset originale delle mammografie con il filtro e con il dataset augmented. 
+    
+    Argomento
+    ---------
 
-    Argomenti
-    ----------
+    shape : tupla
+        Dimensionalità delle immagini (64x64 px) con cui si allenarà la CNN e il tipo di *color channels* (in questo caso, trattandosi di immagini in scala di grigi, in questo caso, trattandosi di immagini in scala di grigi, il canale del colore deve essere impostato su 1).
+       
+    
+    Risultato:
+        Modelo
 
-    train : 
-        Modello allenato.
-
-    title : str
-        Titolo dei plots.
     """
 
-    acc = train.history['accuracy']
-    val_acc = train.history['val_accuracy']
-    loss = train.history['loss']
-    val_loss = train.history['val_loss']
-
-    epochs_range = range(1, len(acc)+1)
-
-    t_acc = title + ': training and validation accuracy'
-    t_loss = title + ': training and validation loss'
     
-    #Train and validation accuracy
-    plt.figure(figsize=(15, 15))
-    plt.subplot(2, 2, 1)
-    plt.plot(epochs_range, acc, label='Training Accuracy')
-    plt.plot(epochs_range, val_acc, label='Validation Accuracy')
-    plt.legend(loc='lower right')
-    plt.title(t_acc)
+    model = Sequential([
+        
+        Conv2D(9, (3,3), padding = 'same', input_shape = shape),
+        BatchNormalization(),
+        Activation('relu'),
     
-    #Train and validation loss
-    plt.subplot(2, 2, 2)    
-    plt.plot(epochs_range, loss, label='Training Loss')
-    plt.plot(epochs_range, val_loss, label='Validation Loss')
-    plt.legend(loc='upper right')
-    plt.title(t_loss)
-    plt.show()
+        MaxPool2D((4,4), strides = 2),
+        
+        
+        Conv2D(22, (3,3), padding = 'same'),
+        BatchNormalization(),
+        Activation('relu'),
+        
+        MaxPool2D((4,4), strides = 2),
+        
+        
+        Conv2D(33, (3,3), padding = 'same'),
+        BatchNormalization(),
+        Activation('relu'),
+        
+        MaxPool2D((4,4), strides = 2),
+        
+        Flatten(),
+        
+        Dense(10, activation = 'relu'),
+        Dense(1, activation = 'sigmoid')        
+        
+    ])
+    
+    return model

@@ -1,5 +1,5 @@
 def f_cnn(shape=(64, 64, 1)):
-    """Modelo della CNN ottimizzato per il dataset originale delle mammografie senza filtrare. 
+    """Modelo della CNN ottimizzato per il dataset originale delle mammografie con il filtro. 
     
     Argomento
     ---------
@@ -16,21 +16,21 @@ def f_cnn(shape=(64, 64, 1)):
     
     model = Sequential([
         
-        Conv2D(11, (3,3), padding = 'same', input_shape = shape),
+        Conv2D(10, (3,3), padding = 'same', input_shape = shape),
         BatchNormalization(),
         Activation('relu'),
     
         MaxPool2D((4,4), strides = 2),
         
         
-        Conv2D(22, (3,3), padding = 'same'),
+        Conv2D(16, (3,3), padding = 'same'),
         BatchNormalization(),
         Activation('relu'),
         
         MaxPool2D((4,4), strides = 2),
         
         
-        Conv2D(33, (3,3), padding = 'same'),
+        Conv2D(29, (3,3), padding = 'same'),
         BatchNormalization(),
         Activation('relu'),
         
