@@ -37,7 +37,7 @@ Code execution
 ---------------
 
 
-Il codice si trova nella cartella chiamata `RadCNN <https://github.com/bitgio/Radiomics-vs-CNN/tree/main/RadCNN>*`_. È diviso in due sezioni: la parte
+Il codice si trova nella cartella chiamata `RadCNN <https://github.com/bitgio/Radiomics-vs-CNN/tree/main/RadCNN>`_. È diviso in due sezioni: la parte
 con la pipeline radiomica e quella della CNN.
 
 * radiomica:
