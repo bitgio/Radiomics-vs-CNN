@@ -29,13 +29,10 @@ def create_nf_dataset(datfold, l, imf, lab):
      
     for element in l:
         if "_1_resized.pgm" in element:
-            mo = imread(os.path.join(datfold, element))
             mf = imread(os.path.join(datfold, element))
             imf.append(mf)
             lab.append(1.)
         elif "_2_resized.pgm" in element:
-            mo = imread(os.path.join(datfold, element))
             mf = imread(os.path.join(datfold, element))
             imf.append(mf)
             lab.append(0.)
-
