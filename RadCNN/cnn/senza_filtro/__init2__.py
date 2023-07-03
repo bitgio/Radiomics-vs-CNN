@@ -77,6 +77,9 @@ if __name__ == '__main__':
     reduce_on_plateau = ReduceLROnPlateau(monitor="val_loss", factor=0.1, patience=10,  
                                           verbose=0, mode="auto", min_delta=0.0001, cooldown=0, min_lr=0)
 
+
+
+
     # MODELLO ALLENATO CON LE IMMAGINI NON FILTRATE
     model_o = nf_cnn()
     model_o.compile(optimizer = SGD(learning_rate, momentum = 0.9), loss = 'binary_crossentropy', metrics = ['accuracy'])
@@ -114,6 +117,8 @@ if __name__ == '__main__':
     plot_train_val(train_aug, 'Non-Filtered Augmented Dataset')
 
 
+
+    # CONFRONTO DELLA PERFORMANCE TRA IL MODELLO USANDO O NO IL DATA AUGMENTATION
     acc_nf = []
     acc_nf_aug = []
     for j in range(10):
@@ -124,5 +129,46 @@ if __name__ == '__main__':
         print('Validation accuracy: %.3f' % (val_acc))
         acc_nf_aug.append(val_acc)
     
-    print(f'DATASET NON-FILTERED:\nValidation accuracy: {np.mean(acc_nf)} \t Validation loss: {np.std(acc_nf)}')
-    print(f'DATASET AUGMENTED NON-FILTERED:\nValidation accuracy: {np.mean(acc_nf_aug)} \t Validation loss: {np.std(acc_nf_aug)}')
+    print(f'DATASET NON-FILTERED:\nMean validation accuracy: {np.mean(acc_nf)} \tMean validation std: {np.std(acc_nf)}')
+    print(f'DATASET AUGMENTED NON-FILTERED:\nMean validation accuracy: {np.mean(acc_nf_aug)} \tMean validation std: {np.std(acc_nf_aug)}')
+
+
+
+    # TESTING IL MODELLO PIÙ AFFIDABILE
+    mammo_o_t, label_t = [], []
+    data_folder_t = "../test_dataset/"
+    os.chdir(data_folder_t)
+    l_t = os.listdir()
+
+    os.chdir("./")
+    threads = []
+    chunk = 6
+
+    for i in range(10):
+        t = thr.Thread(target = create_nf_dataset, args = (data_folder_t, l_t[i*chunk : (i+1)*chunk], mammo_o_t, label_t))
+        threads.append(t)
+        t.start()
+        
+    for j in threads:
+        j.join()
+
+    mammo_o_t = np.asarray(mammo_o_t, dtype = 'float32')/255.
+    label_t = np.asarray(label_t)
+    mammo_o_4d_t = np.reshape(mammo_o_t, (30, 64, 64, 1))
+
+    if np.mean(acc_nf) > np.mean(acc_nf_aug):
+        test_loss, test_acc = model_o.evaluate(mammo_o_4d_t, label_t)
+        preds_test = model_o.predict(mammo_o_4d_t, verbose=1)
+        fpr, tpr, _ = roc_curve(label_t, preds_test)
+        roc_auc = auc(fpr, tpr)
+
+        print('\n Test accuracy = %.3f'% (test_acc))
+        print('\n AUC = %.3f'% (roc_auc))
+    else:
+        test_loss, test_acc = model_o_aug.evaluate(mammo_o_4d_t, label_t)
+        preds_test = model_o_aug.predict(mammo_o_4d_t, verbose=1)
+        fpr, tpr, _ = roc_curve(label_t, preds_test)
+        roc_auc = auc(fpr, tpr)
+        
+        print('\n Test accuracy = %.3f'% (test_acc))
+        print('\n AUC = %.3f'% (roc_auc))

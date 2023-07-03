@@ -93,7 +93,6 @@ if __name__ == '__main__':
     plot_train_val(train, 'Filtered Dataset')
 
 
-    
 
     # MODELLO ALLENATO CON LE IMMAGINI FILTRATE E QUELLE CHE SONO STATE CREATE CON LA DATA AUGMENTATION  
     model_f_aug = f_cnn_aug()
@@ -115,6 +114,9 @@ if __name__ == '__main__':
     
     plot_train_val(train_aug, 'Filtered Augmented Dataset')
 
+
+
+    # CONFRONTO DELLA PERFORMANCE TRA IL MODELLO USANDO O NO IL DATA AUGMENTATION
     acc_f = []
     acc_f_aug = []
     for j in range(10):
@@ -125,5 +127,46 @@ if __name__ == '__main__':
         print('Validation accuracy: %.3f' % (val_acc))
         acc_f_aug.append(val_acc)
     
-    print(f'DATASET FILTERED:\nValidation accuracy: {np.mean(acc_f)} \t Validation loss: {np.std(acc_f)}')
-    print(f'DATASET AUGMENTED FILTERED:\nValidation accuracy: {np.mean(acc_f_aug)} \t Validation loss: {np.std(acc_f_aug)}')
+    print(f'DATASET FILTERED:\nMean validation accuracy: {np.mean(acc_f)} \tMean validation std: {np.std(acc_f)}')
+    print(f'DATASET AUGMENTED FILTERED:\nMean validation accuracy: {np.mean(acc_f_aug)} \tMean validation loss: {np.std(acc_f_aug)}')
+
+
+
+    # TESTING IL MODELLO PIÙ AFFIDABILE
+    mammo_f_t, label_t = [], []
+    data_folder_t = "../test_dataset/"
+    os.chdir(data_folder_t)
+    l_t = os.listdir()
+
+    os.chdir("./")
+    threads = []
+    chunk = 6
+
+    for i in range(10):
+        t = thr.Thread(target = create_f_dataset, args = (data_folder_t, l_t[i*chunk : (i+1)*chunk], mammo_f_t, label_t))
+        threads.append(t)
+        t.start()
+        
+    for j in threads:
+        j.join()
+
+    mammo_f_t = np.asarray(mammo_f_t, dtype = 'float32')/255.
+    label_t = np.asarray(label_t)
+    mammo_f_4d_t = np.reshape(mammo_f_t, (30, 64, 64, 1))
+
+    if np.mean(acc_f) > np.mean(acc_f_aug):
+        test_loss, test_acc = model_f.evaluate(mammo_f_4d_t, label_t)
+        preds_test = model_f.predict(mammo_f_4d_t, verbose=1)
+        fpr, tpr, _ = roc_curve(label_t, preds_test)
+        roc_auc = auc(fpr, tpr)
+
+        print('\n Test accuracy = %.3f'% (test_acc))
+        print('\n AUC = %.3f'% (roc_auc))
+    else:
+        test_loss, test_acc = model_f_aug.evaluate(mammo_f_4d_t, label_t)
+        preds_test = model_f_aug.predict(mammo_f_4d_t, verbose=1)
+        fpr, tpr, _ = roc_curve(label_t, preds_test)
+        roc_auc = auc(fpr, tpr)
+        
+        print('\n Test accuracy = %.3f'% (test_acc))
+        print('\n AUC = %.3f'% (roc_auc))
