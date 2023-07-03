@@ -50,4 +50,8 @@ con la pipeline radiomica e quella della CNN.
     allenate soltanto con i dataset originale oppure con un dataset più grande (cioè, con un set di dati aumentati tramitte l'uso della data augmentation).
 
 
-    Ci sono anche delle sottocartelle dove si è spezzato il codice per potere compilare del modo corretto la documentazione.
+    Ci sono anche delle sottocartelle dove si è spezzato il codice per potere compilare del modo corretto la documentazione. È sufficiente eseguire il file __init1__ oppure
+    __init2__ nella cartella corrispondente per esecutare questa parte del progetto.
+
+In particolare, non è stato possibile aggiungere la documentazione della parte di radiomica in quanto l'uso di Matlab non è apparentemente compatibile con la piattaforma *readthedocs*
+che è stata utilizzata per creare la documentazione che state leggendo su questo sito.
