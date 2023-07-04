@@ -1,0 +1,14 @@
+#Programming language of the files to be tested
+
+language: python
+
+# Command to install all dependencies (libraries and other requirements)
+
+install:
+  - pip install -r requirements.txt
+
+# Command to run tests:
+
+script:
+  - pytest
+
